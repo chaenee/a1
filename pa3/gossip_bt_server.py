@@ -36,7 +36,7 @@ if __name__ == '__main__':
             NO2 = uniform(60, 70)       # random SN2 value
             SO2 = uniform(80, 90)       # random SN3 value
             O3 = uniform(100, 110)     # random SN4 value
-            PM25 = uniform(120, 130)    # random PM25 value
+            PM25 = uniform(50, 70)    # random PM25 value
 
             msg = ""
             if args.output_format == "csv":
