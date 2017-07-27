@@ -32,23 +32,24 @@ if __name__ == '__main__':
             # Create CSV message "'realtime', time, temp, SN1, SN2, SN3, SN4, PM25\n"
             epoch_time = int(time())    # epoch time
             temp = uniform(20, 30)      # random temperature
-            SN1 = uniform(40, 50)       # random SN1 value
-            SN2 = uniform(60, 70)       # random SN2 value
-            SN3 = uniform(80, 90)       # random SN3 value
-            SN4 = uniform(100, 110)     # random SN4 value
+            CO = uniform(40, 50)       # random SN1 value
+            NO2 = uniform(60, 70)       # random SN2 value
+            SO2 = uniform(80, 90)       # random SN3 value
+            O3 = uniform(100, 110)     # random SN4 value
             PM25 = uniform(120, 130)    # random PM25 value
 
             msg = ""
             if args.output_format == "csv":
-                msg = "realtime, %d, %f, %f, %f, %f, %f, %f" % (epoch_time, temp, SN1, SN2, SN3, SN4, PM25)
+                msg = "realtime, %d, %f, %f, %f, %f, %f, %f" % (epoch_time, temp, CO, NO2, SO2, O3, PM25)
             elif args.output_format == "json":
                 output = {'type': 'realtime',
                           'time': epoch_time,
-                          'SN1': SN1,
-                          'SN2': SN2,
-                          'SN3': SN3,
-                          'SN4': SN4,
-                          'PM25': PM25}
+                          'CO': CO,
+                          'NO2': NO2,
+                          'SO2': SO2,
+                          'O3': O3,
+                          'PM25': PM25,
+                          'temp' : temp }
                 msg = json.dumps(output)
             try:
                 client_handler.send(msg + '\n')
