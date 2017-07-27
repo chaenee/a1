@@ -44,11 +44,11 @@ if __name__ == '__main__':
             elif args.output_format == "json":
                 output = {'type': 'realtime',
                           'time': epoch_time,
-                          'CO': CO,
-                          'NO2': NO2,
-                          'SO2': SO2,
-                          'O3': O3,
-                          'PM25': PM25,
+                          'CO': round(CO,2),
+                          'NO2': round(NO2,2),
+                          'SO2': round(SO2,2),
+                          'O3': round(O3,2),
+                          'PM25': round(PM25,2),
                           'temp' : temp }
                 msg = json.dumps(output)
             try:
