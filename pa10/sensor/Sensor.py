@@ -17,7 +17,7 @@ class SensorServer(Thread):
 
         # Assign GPIO pins that controls MUX, LSB to MSB
         self.gpio_pins = [24, 25, 26, 27]
-        self.gpio = Gpio()
+        self.gpio = Gpio()  # initialize gpio library
         # Set GPIO pins to output
         try:
             for pin in self.gpio_pins:  # self.gpio_pins의 24,25,26,27이 순서대로 pin 변수에 대입됨 => 반복
@@ -26,14 +26,12 @@ class SensorServer(Thread):
             logger.error("Error setting GPIO pin, reason %s" % e.message)
             print "Error setting GPIO pin %d, reason %s" % e.message
         # CSV
-
         # Use A0 port
         self.adc_raw = "/sys/bus/iio/devices/iio:device0/in_voltage0_raw"
         self.adc_scale = "/sys/bus/iio/devices/iio:device0/in_voltage_scale"
 
         self.sensor_names = ['Temp', 'SN1', 'SN2', 'SN3', 'SN4', 'PM25']
         # JSOM
-
         # Use a dict to store sensor output, the format is:
         # { "time": [time stamp],
         #   [sensor1 name]: [sensor1 output],
@@ -43,7 +41,7 @@ class SensorServer(Thread):
 
         # Create a lock to protect sensor output. That is, when updating the result, lock it on to prevent it from being
         # read at the same time; similarly, when reading the result, lock it on to prevent it from being updated.
-        self.sensor_output_lock = Lock()
+        self.sensor_output_lock = Lock()  # multiple thread , running at the same time , no duplicate
 
         self.db_conn = sqlite3.connect("air_pollution_data.db")
         self.db_cur = self.db_conn.cursor()
@@ -54,7 +52,7 @@ class SensorServer(Thread):
         # Get the latest sensor output
         return self.sensor_output.copy()
 
-    def set_mux_channel(self, m):
+    def set_mux_channel(self, m):  # m = channel
         # Set MUX channel
         # Convert n into a binary string
         bin_repr = "{0:04b}".format(m)

@@ -13,7 +13,7 @@ server_sock.listen(1)  # Accessible one device
 
 port = server_sock.getsockname()[1] # get port number
 
-uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"  # get random number
+uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"  # get random number # communication protocol
 
 advertise_service(server_sock,
                   "SampleServer",
