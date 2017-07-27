@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
             msg = ""
             if args.output_format == "csv":
-                msg = "realtime, %d, %2.f, %2.f, %2.f, %2.f, %2.f, %2.f" % (epoch_time, temp, CO, NO2, SO2, O3, PM25)
+                msg = "realtime, %d, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f, %0.2f" % (epoch_time, temp, CO, NO2, SO2, O3, PM25)
             elif args.output_format == "json":
                 output = {'type': 'realtime',
                           'time': epoch_time,
