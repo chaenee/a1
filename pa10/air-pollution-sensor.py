@@ -51,24 +51,24 @@ if __name__ == '__main__':
         sensor_output = sensor_server.get_sensor_output()
         epoch_time = int(time())                    # epoch time
         temp = sensor_output.get('Temp', -1)
-        SN1 = sensor_output.get('SN1', -1)
-        SN2 = sensor_output.get('SN2', -1)
-        SN3 = sensor_output.get('SN3', -1)
-        SN4 = sensor_output.get('SN4', -1)
+        CO = sensor_output.get('CO', -1)
+        NO2 = sensor_output.get('NO2', -1)
+        SO2 = sensor_output.get('SO2', -1)
+        O3 = sensor_output.get('O3', -1)
         PM25 = sensor_output.get('PM25', -1)
 
         if args.output_format == "csv":
             # Create CSV message "'real-time', time, temp, SN1, SN2, SN3, SN4, PM25".
-            msg = "real-time, {}, {}, {}, {}, {}, {}, {}".format(epoch_time, temp, SN1, SN2, SN3, SN4, PM25)
+            msg = "real-time, {}, {}, {}, {}, {}, {}, {}".format(epoch_time, temp, CO, NO2, SO2, O3, PM25)
         elif args.output_format == "json":
             # Create JSON message.
             output = {'type': 'real-time',
                       'time': epoch_time,
                       'temp': temp,
-                      'SN1': SN1,
-                      'SN2': SN2,
-                      'SN3': SN3,
-                      'SN4': SN4,
+                      'CO': round(CO,1),
+                      'NO2': round(NO2,1),
+                      'SO2': round(SO2,1),
+                      'O3': round(O3,1),
                       'PM25': PM25}
             msg = json.dumps(output)
 
