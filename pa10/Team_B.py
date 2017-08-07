@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
             msg = ""
             sensor_output = sensor_server.get_sensor_output()
-            
+
             real_time =int(time())
             temp = sensor_output.get('temp', -1)
             CO = sensor_output.get('CO', -1)
