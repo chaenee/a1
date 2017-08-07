@@ -30,13 +30,13 @@ if __name__ == '__main__':
         for client_handler in server.active_client_handlers.copy():
             # Use a copy() to get the copy of the set, avoiding 'set change size during iteration' error
             # Create CSV message "'realtime', time, temp, SN1, SN2, SN3, SN4, PM25\n"
-              # epoch time
+
             temp = uniform(20, 30)      # random temperature
-            CO = uniform(40, 50)       # random SN1 value
-            NO2 = uniform(60, 70)       # random SN2 value
-            SO2 = uniform(80, 90)       # random SN3 value
-            O3 = uniform(100, 110)     # random SN4 value
-            PM25 = uniform(50, 70)    # random PM25 value
+            CO = uniform(0, 50.4)       # random SN1 value
+            NO2 = uniform(0, 2049)       # random SN2 value
+            SO2 = uniform(0, 1004)       # random SN3 value
+            O3 = uniform(125, 604)     # random SN4 value
+            PM25 = uniform(0, 500.4)    # random PM25 value
 
             msg = ""
             if args.output_format == "csv":
