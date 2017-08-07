@@ -39,7 +39,7 @@ if __name__ == '__main__':
             msg = ""
             sensor_output = sensor_server.get_sensor_output()
 
-            real_time =int(time())
+            realtime =int(time())
             temp = sensor_output.get('temp', -1)
             CO = sensor_output.get('CO', -1)
             NO2 = sensor_output.get('NO2', -1)
@@ -51,7 +51,7 @@ if __name__ == '__main__':
             if args.output_format == "csv":
                         msg = "%f, %f, %f, %f, %f, %f" % (temp, CO, NO2, SO2, O3, PM25)
             elif args.output_format == "json":
-                output = {  'time': real_time,
+                output = {  'realtime': realtime,
                             'O3': round(O3,1),
                             'NO2': round(NO2,1),
                             'PM25': round(PM25,1),
