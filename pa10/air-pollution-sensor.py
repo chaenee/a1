@@ -50,7 +50,7 @@ if __name__ == '__main__':
         msg = ""
         sensor_output = sensor_server.get_sensor_output()
         epoch_time = int(time())                    # epoch time
-        temp = sensor_output.get('Temp', -1)
+        temp = sensor_output.get('temp', -1)
         CO = sensor_output.get('CO', -1)
         NO2 = sensor_output.get('NO2', -1)
         SO2 = sensor_output.get('SO2', -1)
@@ -62,14 +62,13 @@ if __name__ == '__main__':
             msg = "real-time, {}, {}, {}, {}, {}, {}, {}".format(epoch_time, temp, CO, NO2, SO2, O3, PM25)
         elif args.output_format == "json":
             # Create JSON message.
-            output = {'type': 'real-time',
-                      'time': epoch_time,
-                      'temp': temp,
+            output = {'apptime': epoch_time,
+                      'temp': round(temp,1),
                       'CO': round(CO,1),
                       'NO2': round(NO2,1),
                       'SO2': round(SO2,1),
                       'O3': round(O3,1),
-                      'PM25': PM25}
+                      'PM25': round(PM25,1)}
             msg = json.dumps(output)
 
         # Attach a new line character at the end of the message

@@ -30,7 +30,7 @@ if __name__ == '__main__':
         for client_handler in server.active_client_handlers.copy():
             # Use a copy() to get the copy of the set, avoiding 'set change size during iteration' error
             # Create CSV message "'realtime', time, temp, SN1, SN2, SN3, SN4, PM25\n"
-            epoch_time = int(time())    # epoch time
+              # epoch time
             temp = uniform(20, 30)      # random temperature
             CO = uniform(40, 50)       # random SN1 value
             NO2 = uniform(60, 70)       # random SN2 value
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
             msg = ""
             if args.output_format == "csv":
-                        msg = "%d, %f, %f, %f, %f, %f, %f" % (epoch_time, temp, CO, NO2, SO2, O3, PM25)
+                        msg = "%f, %f, %f, %f, %f, %f" % (temp, CO, NO2, SO2, O3, PM25)
             elif args.output_format == "json":
                 output = {'O3': round(O3,1),
                           'NO2': round(NO2,1),
@@ -48,7 +48,6 @@ if __name__ == '__main__':
                           'CO': round(CO,1),
                           'SO2': round(SO2,1),
                           'temp': round(temp,1),
-                          'apptime': epoch_time,
                           }
                 msg = json.dumps(output)
             try:
