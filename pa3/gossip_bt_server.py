@@ -42,13 +42,14 @@ if __name__ == '__main__':
             if args.output_format == "csv":
                         msg = "%d, %f, %f, %f, %f, %f, %f" % (epoch_time, temp, CO, NO2, SO2, O3, PM25)
             elif args.output_format == "json":
-                output = {'apptime': epoch_time,
-                          'CO': round(CO,1),
+                output = {'O3': round(O3,1),
                           'NO2': round(NO2,1),
-                          'SO2': round(SO2,1),
-                          'O3': round(O3,1),
                           'PM25': round(PM25,1),
-                          'temp' : round(temp,1) }
+                          'CO': round(CO,1),
+                          'SO2': round(SO2,1),
+                          'temp': round(temp,1),
+                          'apptime': epoch_time,
+                          }
                 msg = json.dumps(output)
             try:
                 client_handler.send(msg + '\n')
