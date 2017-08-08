@@ -29,7 +29,7 @@ class SensorServer(Thread):
         self.adc_raw = "/sys/bus/iio/devices/iio:device0/in_voltage0_raw"
         self.adc_scale = "/sys/bus/iio/devices/iio:device0/in_voltage_scale"
 
-        self.sensor_names = ['temp', 'CO', 'NO2', 'SO2', 'O3', 'PM25']
+        self.sensor_names = ['Temp', 'SN1', 'SN2', 'SN3', 'SN4', 'PM25']
 
         # Use a dict to store sensor output, the format is:
         # { "time": [time stamp],
@@ -64,13 +64,13 @@ class SensorServer(Thread):
         # -----------------------------------------------
         #   int | real | real | real | real | real | real
         self.db_cur.execute(("CREATE TABLE IF NOT EXISTS history (time int PRIMARY KEY NOT NULL,"
-                             " {0} real, {1} real, {2} real, {3} real, {4} real, {5} real)").format(
-            self.sensor_names[0],
-            self.sensor_names[1],
-            self.sensor_names[2],
-            self.sensor_names[3],
-            self.sensor_names[4],
-            self.sensor_names[5]))
+                             " {0} real, {1} real, {2} real, {3} real, {4} real, {5} real)")
+                            .format(self.sensor_names[0],
+                                    self.sensor_names[1],
+                                    self.sensor_names[2],
+                                    self.sensor_names[3],
+                                    self.sensor_names[4],
+                                    self.sensor_names[5]))
 
         # Commit the changes. When a database is accessed by multiple connections, and one of the processes modifies the
         # database, the SQLite database is locked until that transaction is committed. The timeout parameter specifies
@@ -137,7 +137,7 @@ class SensorServer(Thread):
             self.sensor_output_lock.acquire()
             # Add time stamp
             epoch_time = int(time())
-            self.sensor_output['realtime'] = epoch_time
+            self.sensor_output['time'] = epoch_time
 
             # Do sensor reading here
             #  1. set MUX to sensor 0, read sensor 0;
@@ -149,42 +149,35 @@ class SensorServer(Thread):
             t0 = 550
             c0, c1 = self.read_sensor(0)
             # Channel 1 is not connected so we don't care about its output
-            v = 5 * 0.000244140625 * c0
-
-            temp = (1000 * v)-t0
-
+            temp = c0 - t0
             logger.info("{} sensor outputs {} degree".format(self.sensor_names[0], temp))
             # Save output to the dict
             self.sensor_output[self.sensor_names[0]] = temp
 
             logger.info("Reading {} sensor...".format(self.sensor_names[1]))
             c2, c3 = self.read_sensor(1)
-            sn1 = ((c2 - 345) - ((-1) * c3 - (c3 - 314))) * 3.42465753
-
+            sn1 = c2 - c3
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[1], sn1))
             # Save output to the dict
             self.sensor_output[self.sensor_names[1]] = sn1
 
-            logger.info("Reading {} sensor...".format(self.sensor_names[2]
-                                                      ))
+            logger.info("Reading {} sensor...".format(self.sensor_names[2]))
             c4, c5 = self.read_sensor(2)
-            sn2 = ((c4 - 287) - ((1.35) * c5 - (c5 - 292))) * 3.87596899
-
+            sn2 = c4 - c5
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[2], sn2))
             # Save output to the dict
             self.sensor_output[self.sensor_names[2]] = sn2
 
             logger.info("Reading {} sensor...".format(self.sensor_names[3]))
             c6, c7 = self.read_sensor(3)
-            sn3 = ((c6 - 333) - ((1.35) * c7 - (c7 - 274))) * 3.47222222
+            sn3 = c6 - c7
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[3], sn3))
             # Save output to the dict
             self.sensor_output[self.sensor_names[3]] = sn3
 
             logger.info("Reading {} sensor...".format(self.sensor_names[4]))
             c8, c9 = self.read_sensor(4)
-            sn4 = ((c8 - 418) - ((1.28) * (c9 - 404))) * 2.54452926
-
+            sn4 = c8 - c9
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[4], sn4))
             # Save output to the dict
             self.sensor_output[self.sensor_names[4]] = sn4
@@ -196,8 +189,8 @@ class SensorServer(Thread):
             # Save output to the dict
             self.sensor_output[self.sensor_names[5]] = pm25
 
-            self.db_cur.execute("INSERT INTO history VALUES ({}, {}, {}, {}, {}, {}, {})".format(
-                epoch_time, temp, sn1, sn2, sn3, sn4, pm25))
+            self.db_cur.execute("INSERT INTO history VALUES ({}, {}, {}, {}, {}, {}, {})"
+                                .format(epoch_time, temp, sn1, sn2, sn3, sn4, pm25))
 
             self.db_conn.commit()
             self.sensor_output_lock.release()
