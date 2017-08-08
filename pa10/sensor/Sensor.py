@@ -161,7 +161,8 @@ class SensorServer(Thread):
             # Save output to the dict
             self.sensor_output[self.sensor_names[1]] = sn1
 
-            logger.info("Reading {} sensor...".format(self.sensor_names[2]))
+            logger.info("Reading {} sensor...".format(self.sensor_names[2]
+                                                      ))
             c4, c5 = self.read_sensor(2)
             sn2 = c4 - c5
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[2], sn2))

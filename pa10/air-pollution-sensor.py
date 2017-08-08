@@ -62,7 +62,8 @@ if __name__ == '__main__':
             msg = "real-time, {}, {}, {}, {}, {}, {}, {}".format(realtime, temp, SN1, SN2, SN3, SN4, PM25)
         elif args.output_format == "json":
             # Create JSON message.
-            output = {'type': 'real-time',
+            output = {'name':'teamB_sensor',
+                      'type': 'real-time',
                       'realtime': realtime,
                       'temp': temp,
                       'SN1': SN1,
