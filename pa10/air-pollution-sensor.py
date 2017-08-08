@@ -49,7 +49,7 @@ if __name__ == '__main__':
     while True:
         msg = ""
         sensor_output = sensor_server.get_sensor_output()
-        realtime = int(time())                    # epoch time
+        epoch_time = int(time())                    # epoch time
         temp = sensor_output.get('temp', -1)
         SN1 = sensor_output.get('CO', -1)
         SN2 = sensor_output.get('NO2', -1)
@@ -59,17 +59,17 @@ if __name__ == '__main__':
 
         if args.output_format == "csv":
             # Create CSV message "'real-time', time, temp, SN1, SN2, SN3, SN4, PM25".
-            msg = "real-time, {}, {}, {}, {}, {}, {}, {}".format(realtime, temp, SN1, SN2, SN3, SN4, PM25)
+            msg = "real-time, {}, {}, {}, {}, {}, {}, {}".format(epoch_time, temp, SN1, SN2, SN3, SN4, PM25)
         elif args.output_format == "json":
             # Create JSON message.
-            output = {'name':'teamB_sensor',
+            output = {'MAC' : '4e:71:9e:8c:88:fd',
                       'type': 'real-time',
-                      'realtime': realtime,
+                      'time': epoch_time,
                       'temp': temp,
-                      'SN1': SN1,
-                      'SN2': SN2,
-                      'SN3': SN3,
-                      'SN4': SN4,
+                      'CO': SN1,
+                      'NO2': SN2,
+                      'SO2': SN3,
+                      'O3': SN4,
                       'PM25': PM25}
             msg = json.dumps(output)
 

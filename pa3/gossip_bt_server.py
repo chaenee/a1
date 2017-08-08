@@ -42,7 +42,8 @@ if __name__ == '__main__':
             if args.output_format == "csv":
                         msg = "%f, %f, %f, %f, %f, %f" % (temp, CO, NO2, SO2, O3, PM25)
             elif args.output_format == "json":
-                output = {'name':'teamB_sensor',
+                output = {
+                            'name':'teamB_sensor',
                           'realtime': realtime,
                           'O3': round(O3,1),
                           'NO2': round(NO2,1),
