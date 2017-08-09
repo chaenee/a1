@@ -149,8 +149,8 @@ class SensorServer(Thread):
             t0 = 550
             c0 = self.read_sensor(0)
 
-            v = 5 * 0.000244140625 * c0
-            temp = (1000 * v) - t0
+
+            temp = (1.22 * c0) - t0
 
             # Channel 1 is not connected so we don't care about its output
             logger.info("{} sensor outputs {} degree".format(self.sensor_names[0], temp))
