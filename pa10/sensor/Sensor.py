@@ -149,7 +149,6 @@ class SensorServer(Thread):
             t0 = 550
             c0 = self.read_sensor(0)
 
-
             temp = c0 - t0
 
             # Channel 1 is not connected so we don't care about its output
