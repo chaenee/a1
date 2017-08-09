@@ -21,7 +21,7 @@ if __name__ == '__main__':
                         help="set output format: csv, json")
     parser.add_argument("--database", dest="database_name", default="air_pollution_data.db",
                         help="specify database file")
-    parser.add_argument("--baud-rate", dest="baud_rate", default=115200,
+    parser.add_argument("--baud-rate", dest="baud_rate", default="115200",
                         help="specify Bluetooth baud rate in bps")
 
     args = parser.parse_args()
@@ -53,61 +53,26 @@ if __name__ == '__main__':
         sensor_output = sensor_server.get_sensor_output()
         epoch_time = int(time())                    # epoch time
         temp = sensor_output.get('temp', -1)
-        SN1 = sensor_output.get('CO', -1)
-        SN2 = sensor_output.get('NO2', -1)
-        SN3 = sensor_output.get('SO2', -1)
-        SN4 = sensor_output.get('O3', -1)
+        CO = sensor_output.get('CO', -1)
+        NO2 = sensor_output.get('NO2', -1)
+        SO2 = sensor_output.get('SO2', -1)
+        O3 = sensor_output.get('O3', -1)
         PM25 = sensor_output.get('PM25', -1)
-
-        #SN1Avglist = []
-        #SN1Avglist.append(SN1)
-        #listSum1 = sum(SN1Avglist)
-        #listLength1 = len(SN1Avglist)
-        #listAverage1 = listSum1 / listLength1
-
-        #SN2Avglist = []
-        #SN2Avglist.append(SN2)
-        #listSum2 = sum(SN2Avglist)
-        #listLength2 = len(SN2Avglist)
-        #listAverage2 = listSum2 / listLength2
-
-        #SN3Avglist = []
-        #SN3Avglist.append(SN3)
-        #listSum3 = sum(SN3Avglist)
-        #listLength3 = len(SN3Avglist)
-        #listAverage3 = listSum3 / listLength3
-
-        #SN4Avglist = []
-        #SN4Avglist.append(SN4)
-        #listSum4 = sum(SN4Avglist)
-        #listLength4 = len(SN4Avglist)
-        #listAverage4 = listSum4 / listLength4
-
-        #PM25Avglist = []
-        #PM25Avglist.append(SN4)
-        #listSum5 = sum(PM25Avglist)
-        #listLength5 = len(PM25Avglist)
-        #listAverage5 = listSum5 / listLength5
 
         r_msg = ""
         if args.output_format == "csv":
             # Create CSV message "'real-time', time, temp, SN1, SN2, SN3, SN4, PM25".
-            r_msg = "{},{},{},{},{},{},{},{}".format('4e:71:9e:8c:88:fd', epoch_time, temp, SN1, SN2, SN3, SN4, PM25)
+            r_msg = "{},{},{},{},{},{},{},{}".format('4e:71:9e:8c:88:fd', epoch_time, temp, CO, NO2, SO2, O3, PM25)
         elif args.output_format == "json":
             # Create JSON message.
-            output = {'MAC': '4e:71:9e:8c:88:fd',
+            output = {'MAC':'4e:71:9e:8c:88:fd',
                       'time': epoch_time,
                       'temp': temp,
-                      'CO': SN1,
-                      'NO2': SN2,
-                      'SO2': SN3,
-                      'O3': SN4,
-                      'PM25': PM25}
-                      #"listAverage1": listAverage1,
-                      #"listAverage2": listAverage2,
-                      #"listAverage3": listAverage3,
-                      #"listAverage4": listAverage4,
-                      #"listAverage5": listAverage5}
+                      'CO': round(CO, 1),
+                      'NO2': round(NO2,1),
+                      'SO2': round(SO2,1),
+                      'O3': round(O3, 1),
+                      'PM25': round(PM25,1),}
             r_msg = json.dumps(output)
 
         for client_handler in bt_server.get_active_client_handlers():
@@ -144,6 +109,7 @@ if __name__ == '__main__':
                         .format(n, args.baud_rate)
 
                     i = 0
+                    print "INFO: Sending results (0/0)...\r",
                     for row in results:
                         i += 1
                         h_msg = "{},{},{},{},{},{},{}".format(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
@@ -154,7 +120,7 @@ if __name__ == '__main__':
                         # baud rate for HC-05 standard is 9600, so the time for the Bluetooth socket to process the
                         # string is (len(h_msg) + 2) * 8 / args.baud_rate; we add 10% margin to this time and wait for
                         # such a long time before we send the next row.
-                        sleep(((len(h_msg) + 2) * 8 * 1.1 / args.baud_rate))
+                        sleep(((len(h_msg) + 2) * 8 * 1.1 / int(args.baud_rate)))
 
                     # Send end-of-message indicator
                     print "\nINFO: Done"

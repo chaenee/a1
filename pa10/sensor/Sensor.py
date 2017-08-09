@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 class SensorServer(Thread):
     """Sensor server that keeps reading sensors and provide get_sensor_output() method for user"""
 
-
     def __init__(self, database_name="air_pollution_data.db"):
         # Parent class constructor
         Thread.__init__(self)
@@ -78,8 +77,6 @@ class SensorServer(Thread):
         # how long the connection should wait for the lock to go away until raising an exception. The default for the
         # timeout parameter is 5.0 (five seconds).
         self.db_conn.commit()
-
-
 
     def __del__(self):
         # Gracefully close the database connection.
@@ -150,8 +147,7 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[0]))
             # Temperature constant
             t0 = 550
-            c0,c1 = self.read_sensor(0)
-
+            c0, c1 = self.read_sensor(0)
             temp = (1.22 * c0) - t0
 
             # Channel 1 is not connected so we don't care about its output
@@ -182,14 +178,16 @@ class SensorServer(Thread):
 
             logger.info("Reading {} sensor...".format(self.sensor_names[4]))
             c8, c9 = self.read_sensor(4)
-            sn4 = (((1.22 * c8) - 418) - ((0.18) *(1.22 * c9) - ((1.22 * c9) - 404))) * 2.54452926
+            sn4 = (((1.22 * c8) - 418) - ((0.18) * (1.22 * c9) - ((1.22 * c9) - 404))) * 2.54452926
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[4], sn4))
             # Save output to the dict
             self.sensor_output[self.sensor_names[4]] = sn4
 
             logger.info("Reading {} sensor...".format(self.sensor_names[5]))
-            c10,c11 = self.read_sensor(5)
-            pm25 = 0.518+0.00274*(240.0*(1.22*c10)**6-2491.3*(1.22*c10)**5+9448.7*(1.22*c10)**4-14840.0*(1.22*c10)**3+10684.0*(1.22*c10)**2+2211.8*(1.22*c10)+7.9623)
+            c10, c11 = self.read_sensor(5)
+            pm25 = 0.518 + 0.00274 * (
+            240.0 * (1.22 * c10) ** 6 - 2491.3 * (1.22 * c10) ** 5 + 9448.7 * (1.22 * c10) ** 4 - 14840.0 * (
+            1.22 * c10) ** 3 + 10684.0 * (1.22 * c10) ** 2 + 2211.8 * (1.22 * c10) + 7.9623)
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[5], pm25))
             # Save output to the dict
             self.sensor_output[self.sensor_names[5]] = pm25
