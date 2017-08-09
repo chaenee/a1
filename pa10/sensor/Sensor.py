@@ -165,7 +165,8 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[2]))
             c4, c5 = self.read_sensor(2)
             sn2 = (((1.22 * c4) - 287) - ((1.18) * (1.22 * c5) - ((1.22 * c5) - 292))) * 3.87596899
-            logger.info("{} sensor outputs {} ppb".format(self.sensor_names[2], sn2))
+            logger.info("{} sensor outputs {} ppb".format(
+                self.sensor_names[2], sn2))
             # Save output to the dict
             self.sensor_output[self.sensor_names[2]] = sn2
 
@@ -192,8 +193,8 @@ class SensorServer(Thread):
             # Save output to the dict
             self.sensor_output[self.sensor_names[5]] = pm25
 
-            self.db_cur.execute("INSERT INTO history VALUES ({}, {}, {}, {}, {}, {}, {})"
-                                .format(epoch_time, temp, sn1, sn2, sn3, sn4, pm25))
+            self.db_cur.execute("INSERT INTO history VALUES ({}, {}, {}, {}, {}, {}, {}, {})"
+                                .format('4e:71:9e:8c:88:fd',epoch_time, temp, sn1, sn2, sn3, sn4, pm25))
 
             self.db_conn.commit()
             self.sensor_output_lock.release()
