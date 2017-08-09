@@ -59,35 +59,35 @@ if __name__ == '__main__':
         SN4 = sensor_output.get('O3', -1)
         PM25 = sensor_output.get('PM25', -1)
 
-        SN1Avglist = []
-        SN1Avglist.append(SN1)
-        listSum1 = sum(SN1Avglist)
-        listLength1 = len(SN1Avglist)
-        listAverage1 = listSum1 / listLength1
+        #SN1Avglist = []
+        #SN1Avglist.append(SN1)
+        #listSum1 = sum(SN1Avglist)
+        #listLength1 = len(SN1Avglist)
+        #listAverage1 = listSum1 / listLength1
 
-        SN2Avglist = []
-        SN2Avglist.append(SN2)
-        listSum2 = sum(SN2Avglist)
-        listLength2 = len(SN2Avglist)
-        listAverage2 = listSum2 / listLength2
+        #SN2Avglist = []
+        #SN2Avglist.append(SN2)
+        #listSum2 = sum(SN2Avglist)
+        #listLength2 = len(SN2Avglist)
+        #listAverage2 = listSum2 / listLength2
 
-        SN3Avglist = []
-        SN3Avglist.append(SN3)
-        listSum3 = sum(SN3Avglist)
-        listLength3 = len(SN3Avglist)
-        listAverage3 = listSum3 / listLength3
+        #SN3Avglist = []
+        #SN3Avglist.append(SN3)
+        #listSum3 = sum(SN3Avglist)
+        #listLength3 = len(SN3Avglist)
+        #listAverage3 = listSum3 / listLength3
 
-        SN4Avglist = []
-        SN4Avglist.append(SN4)
-        listSum4 = sum(SN4Avglist)
-        listLength4 = len(SN4Avglist)
-        listAverage4 = listSum4 / listLength4
+        #SN4Avglist = []
+        #SN4Avglist.append(SN4)
+        #listSum4 = sum(SN4Avglist)
+        #listLength4 = len(SN4Avglist)
+        #listAverage4 = listSum4 / listLength4
 
-        PM25Avglist = []
-        PM25Avglist.append(SN4)
-        listSum5 = sum(PM25Avglist)
-        listLength5 = len(PM25Avglist)
-        listAverage5 = listSum5 / listLength5
+        #PM25Avglist = []
+        #PM25Avglist.append(SN4)
+        #listSum5 = sum(PM25Avglist)
+        #listLength5 = len(PM25Avglist)
+        #listAverage5 = listSum5 / listLength5
 
         r_msg = ""
         if args.output_format == "csv":
@@ -102,12 +102,12 @@ if __name__ == '__main__':
                       'NO2': SN2,
                       'SO2': SN3,
                       'O3': SN4,
-                      'PM25': PM25,
-                      "listAverage1":listAverage1,
-                      "listAverage2": listAverage2,
-                      "listAverage3": listAverage3,
-                      "listAverage4": listAverage4,
-                      "listAverage5": listAverage5}
+                      'PM25': PM25}
+                      #"listAverage1": listAverage1,
+                      #"listAverage2": listAverage2,
+                      #"listAverage3": listAverage3,
+                      #"listAverage4": listAverage4,
+                      #"listAverage5": listAverage5}
             r_msg = json.dumps(output)
 
         for client_handler in bt_server.get_active_client_handlers():
