@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 class SensorServer(Thread):
     """Sensor server that keeps reading sensors and provide get_sensor_output() method for user"""
 
+
     def __init__(self, database_name="air_pollution_data.db"):
         # Parent class constructor
         Thread.__init__(self)
@@ -77,6 +78,8 @@ class SensorServer(Thread):
         # how long the connection should wait for the lock to go away until raising an exception. The default for the
         # timeout parameter is 5.0 (five seconds).
         self.db_conn.commit()
+
+
 
     def __del__(self):
         # Gracefully close the database connection.
@@ -149,7 +152,7 @@ class SensorServer(Thread):
             t0 = 550
             c0,c1 = self.read_sensor(0)
 
-            temp = c0 - t0
+            temp = (1.22 * c0) - t0
 
             # Channel 1 is not connected so we don't care about its output
             logger.info("{} sensor outputs {} degree".format(self.sensor_names[0], temp))
