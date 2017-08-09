@@ -58,7 +58,7 @@ if __name__ == '__main__':
         SN3 = sensor_output.get('SO2', -1)
         SN4 = sensor_output.get('O3', -1)
         PM25 = sensor_output.get('PM25', -1)
-        print temp
+
         SN1Avglist = []
         SN1Avglist.append(SN1)
         listSum1 = sum(SN1Avglist)
