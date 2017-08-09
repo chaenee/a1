@@ -44,13 +44,13 @@ if __name__ == '__main__':
             elif args.output_format == "json":
                 output = {
                             'name':'teamB_sensor',
-                          'realtime': realtime,
-                          'O3': round(O3,1),
-                          'NO2': round(NO2,1),
-                          'PM25': round(PM25,1),
-                          'CO': round(CO,1),
-                          'SO2': round(SO2,1),
-                          'temp': round(temp,1),
+                          'time': realtime,
+                          'O3': round(O3,2),
+                          'NO2': round(NO2,2),
+                          'PM25': round(PM25,2),
+                          'CO': round(CO,2),
+                          'SO2': round(SO2,2),
+                          'temp': round(temp,2),
                           }
                 msg = json.dumps(output)
             try:
