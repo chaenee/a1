@@ -38,8 +38,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         else:
             # If start time is smaller than or equal to end time AND SQL database is available, do SQL query
             # from the database.
-            testtime =strftime("%Y-%m-%d %H:%M:%S", gmtime(testlasttime))
-            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testtime))
+            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testlasttime))
             # Get the result
             global lastresults
             lastresults = self.db_cur.fetchall()
@@ -81,8 +80,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         #       take some time so we should use a different thread to handle this request
         if re.match('stop', command) is not None:
             global last_received_time
-            testtime = int(time())
-            last_received_time = strftime("%Y-%m-%d %H:%M:%S", gmtime(testtime))
+            last_received_time = int(time())
             self.sending_status['real-time'] = False
 
             pass
