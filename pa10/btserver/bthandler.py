@@ -43,7 +43,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             # Get the result
             global lastresults
             # lastresults = self.db_cur.fetchall()
-            lastresults = 15100000000
+            lastresults = 1510000000
 
     def handle_read(self):
         try:
