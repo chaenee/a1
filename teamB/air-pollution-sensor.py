@@ -72,7 +72,7 @@ if __name__ == '__main__':
                       'NO2': round(SN2,1),
                       'SO2': round(SN3,1),
                       'O3': round(SN4, 1),
-                      'PM25': round(PM25,1),}
+                      'PM25': round(PM25,1)}
             r_msg = json.dumps(output)
 
         for client_handler in bt_server.get_active_client_handlers():
