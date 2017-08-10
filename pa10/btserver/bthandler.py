@@ -25,8 +25,9 @@ class BTClientHandler(asyncore.dispatcher_with_send):
 
     def selectlasttime(self):
         try:
+            self.database_name = "air_pollution_data.db"
             # Create the database file and get the connection object.
-            self.db_conn = sqlite3.connect(self.air_pollution_data.db)
+            self.db_conn = sqlite3.connect(self.database_name)
             # Get database cursor from the connection object.
             self.db_cur = self.db_conn.cursor()
         except Exception as e:
