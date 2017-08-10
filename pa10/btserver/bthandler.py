@@ -38,7 +38,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         else:
             # If start time is smaller than or equal to end time AND SQL database is available, do SQL query
             # from the database.
-            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testfirsttime))
+            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(last_received_time))
             # Get the result
             global results
             results = self.db_cur.fetchall()
