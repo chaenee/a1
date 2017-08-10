@@ -79,7 +79,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         #       take some time so we should use a different thread to handle this request
         if re.match('stop', command) is not None:
             global last_received_time
-            last_received_time = sqlite3.time()
+            # last_received_time = sqlite3.time()
             self.sending_status['real-time'] = False
 
             pass
