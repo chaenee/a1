@@ -23,28 +23,6 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         self.data = ""
         self.sending_status = {'real-time': False, 'history': [False, -1, -1]}
 
-    def selectlasttime(self, database_name="air_pollution_data.db"):
-        try:
-            self.database_name = database_name
-            # Create the database file and get the connection object.
-            self.db_conn = sqlite3.connect(self.database_name)
-            # Get database cursor from the connection object.
-            self.db_cur = self.db_conn.cursor()
-        except Exception as e:
-            logger.error("Error connecting the database {}, reason: {}".format(self.database_name, e.message))
-            self.__del__()
-
-        if self.db_cur is None:
-            print "ERROR"
-        else:
-            # If start time is smaller than or equal to end time AND SQL database is available, do SQL query
-            # from the database.
-            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testlasttime))
-            # Get the result
-            global lastresults
-            # lastresults = self.db_cur.fetchall()
-            lastresults = 1510000000
-
     def handle_read(self):
         try:
             data = self.recv(1024)
@@ -91,9 +69,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             if last_received_times is not 0:
                 global testlasttime
                 testlasttime = int(time())
-                # self.selectlasttime()
                 global first_received_times
-                # first_received_times = lastresults
                 first_received_times = testlasttime
                 self.sending_status['history'] = [True, int(last_received_times), int(first_received_times)]
             self.sending_status['real-time'] = True
