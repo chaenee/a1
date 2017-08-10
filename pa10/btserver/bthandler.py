@@ -54,6 +54,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             pass
 
         if re.match('start', command) is not None:
+            self.sending_status['history'] = [True, int(1500000000), int(1510000000)]
             self.sending_status['real-time'] = True
             pass
 
