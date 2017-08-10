@@ -1,8 +1,6 @@
 import asyncore
 import logging
 import re
-
-import argparse
 import sqlite3
 from bterror import BTError
 
@@ -25,7 +23,6 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         self.sending_status = {'real-time': False, 'history': [False, -1, -1]}
 
     def selectfirsttime(self):
-    def selectlasttime(self):
         try:
             # Create the database file and get the connection object.
             self.db_conn = sqlite3.connect(self.database_name)
@@ -40,10 +37,10 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         else:
             # If start time is smaller than or equal to end time AND SQL database is available, do SQL query
             # from the database.
-            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testlasttime))
+            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testfirsttime))
             # Get the result
-            global lastresults
-            lastresults = self.db_cur.fetchall()
+            global results
+            results = self.db_cur.fetchall()
 
     def handle_read(self):
         try:
@@ -81,10 +78,8 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         #       Stop sending real time data, and query the history data from the database. Getting history data might
         #       take some time so we should use a different thread to handle this request
         if re.match('stop', command) is not None:
-            global testfirsttime
-            testfirsttime = sqlite3.time() + 1
             global last_received_time
-            last_received_time = testfirsttime
+            last_received_time = sqlite3.time()
             self.sending_status['real-time'] = False
 
             pass
