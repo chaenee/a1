@@ -106,8 +106,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             global last_received_time
             last_received_time = firstresults
             self.sending_status['real-time'] = False
-            # history의 첫 번째 Int변수를 선언. 저장할 값은 앱으로 마지막으로 전송한 UNIX시간 DB에서 불러와 저장한다.
-             # 맨마지막으로 보낸 시간값
+
             pass
 
         if re.match('start', command) is not None:
@@ -115,7 +114,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
                 global testlasttime
                 testlasttime = sqlite3.time()
                 self.selectlasttime()
-                global first_received_time # 앱에서 받은 제일 처음 시간값
+                global first_received_time 
                 first_received_time = lastresults
                 self.sending_status['history'] = [True, int(last_received_time), int(first_received_time)]
             self.sending_status['real-time'] = True
