@@ -7,10 +7,10 @@ from time import time, strftime, gmtime
 
 logger = logging.getLogger(__name__)
 
-last_received_time = 0
-first_received_time = 0
+last_received_times = 0
+first_received_times = 0
 firstresults = 0
-lastresults = 0
+lastresults = ""
 testfirsttime = 0
 testlasttime = 0
 
@@ -80,20 +80,20 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         #       Stop sending real time data, and query the history data from the database. Getting history data might
         #       take some time so we should use a different thread to handle this request
         if re.match('stop', command) is not None:
-            global last_received_time
-            last_received_time = int(time())
+            global last_received_times
+            last_received_times = int(time())
             self.sending_status['real-time'] = False
 
             pass
 
         if re.match('start', command) is not None:
-            if last_received_time is not 0:
+            if last_received_times is not 0:
                 global testlasttime
                 testlasttime = int(time())
                 self.selectlasttime()
                 global first_received_times
-                first_received_time = lastresults
-                self.sending_status['history'] = [True, int(last_received_time), int(first_received_time)]
+                first_received_times = lastresults
+                self.sending_status['history'] = [True, int(last_received_times), int(first_received_times)]
             self.sending_status['real-time'] = True
             pass
 
