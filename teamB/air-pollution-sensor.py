@@ -67,7 +67,7 @@ if __name__ == '__main__':
             # Create JSON message.
             output = {'MAC':'4e:71:9e:8c:88:fd',
                       'time': epoch_time,
-                      'temp': temp,
+                      'temp': temp(temp,1),
                       'CO': round(SN1, 1),
                       'NO2': round(SN2,1),
                       'SO2': round(SN3,1),
