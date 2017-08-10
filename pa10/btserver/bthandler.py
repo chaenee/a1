@@ -25,25 +25,6 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         self.sending_status = {'real-time': False, 'history': [False, -1, -1]}
 
     def selectfirsttime(self):
-        try:
-            # Create the database file and get the connection object.
-            self.db_conn = sqlite3.connect(self.database_name)
-            # Get database cursor from the connection object.
-            self.db_cur = self.db_conn.cursor()
-        except Exception as e:
-            logger.error("Error connecting the database {}, reason: {}".format(self.database_name, e.message))
-            self.__del__()
-
-        if self.db_cur is None:
-            print "ERROR"
-        else:
-            # If start time is smaller than or equal to end time AND SQL database is available, do SQL query
-            # from the database.
-            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testfirsttime))
-            # Get the result
-            global results
-            results = self.db_cur.fetchall()
-
     def selectlasttime(self):
         try:
             # Create the database file and get the connection object.
@@ -101,10 +82,9 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         #       take some time so we should use a different thread to handle this request
         if re.match('stop', command) is not None:
             global testfirsttime
-            testfirsttime = sqlite3.time()
-            self.selectfirsttime()
+            testfirsttime = sqlite3.time() + 1
             global last_received_time
-            last_received_time = firstresults
+            last_received_time = testfirsttime
             self.sending_status['real-time'] = False
 
             pass
