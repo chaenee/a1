@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 last_received_times = 0
 first_received_times = 0
 firstresults = 0
-lastresults = ""
+lastresults = 0
 testfirsttime = 0
 testlasttime = 0
 
@@ -42,8 +42,9 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testlasttime))
             # Get the result
             global lastresults
-            lastresults = self.db_cur.fetchall()
-
+            # lastresults = self.db_cur.fetchall()
+            lastresults = 15100000000
+            
     def handle_read(self):
         try:
             data = self.recv(1024)
