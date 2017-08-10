@@ -89,7 +89,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         if re.match('start', command) is not None:
             if last_received_time is not 0:
                 global testlasttime
-                testlasttime = int(time()) - 2
+                testlasttime = int(time() - 2)
                 self.selectlasttime()
                 global first_received_times
                 first_received_time = lastresults
