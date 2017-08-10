@@ -3,6 +3,7 @@ import logging
 import re
 import sqlite3
 from bterror import BTError
+from time import  time
 
 logger = logging.getLogger(__name__)
 
@@ -87,7 +88,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         if re.match('start', command) is not None:
             if last_received_time is not 0:
                 global testlasttime
-                testlasttime = sqlite3.time()
+                testlasttime = int(time())
                 self.selectlasttime()
                 global first_received_time
                 first_received_time = lastresults
