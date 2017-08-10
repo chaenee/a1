@@ -90,11 +90,11 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         if re.match('start', command) is not None:
             if last_received_times is not 0:
                 global testlasttime
-                # testlasttime = int(time())
-                testlasttime = 1500000000
-                self.selectlasttime()
+                testlasttime = int(time())
+                # self.selectlasttime()
                 global first_received_times
-                first_received_times = lastresults
+                # first_received_times = lastresults
+                first_received_times = testlasttime
                 self.sending_status['history'] = [True, int(last_received_times), int(first_received_times)]
             self.sending_status['real-time'] = True
             pass
