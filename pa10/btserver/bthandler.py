@@ -3,7 +3,7 @@ import logging
 import re
 import sqlite3
 from bterror import BTError
-from time import  time
+from time import time, strftime, gmtime
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         self.data = ""
         self.sending_status = {'real-time': False, 'history': [False, -1, -1]}
 
-    def selectfirsttime(self):
+    def selectlasttime(self):
         try:
             # Create the database file and get the connection object.
             self.db_conn = sqlite3.connect(self.database_name)
@@ -38,10 +38,11 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         else:
             # If start time is smaller than or equal to end time AND SQL database is available, do SQL query
             # from the database.
-            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(last_received_time))
+            testtime =strftime("%Y-%m-%d %H:%M:%S", gmtime(testlasttime))
+            self.db_cur.execute("SELECT * FROM history WHERE time == {}".format(testtime))
             # Get the result
-            global results
-            results = self.db_cur.fetchall()
+            global lastresults
+            lastresults = self.db_cur.fetchall()
 
     def handle_read(self):
         try:
@@ -80,7 +81,8 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         #       take some time so we should use a different thread to handle this request
         if re.match('stop', command) is not None:
             global last_received_time
-            last_received_time = int(time())
+            testtime = int(time())
+            last_received_time = strftime("%Y-%m-%d %H:%M:%S", gmtime(testtime))
             self.sending_status['real-time'] = False
 
             pass
@@ -88,9 +90,9 @@ class BTClientHandler(asyncore.dispatcher_with_send):
         if re.match('start', command) is not None:
             if last_received_time is not 0:
                 global testlasttime
-                testlasttime = int(time()) + 2
+                testlasttime = int(time()) - 2
                 self.selectlasttime()
-                global first_received_time
+                global first_received_times
                 first_received_time = lastresults
                 self.sending_status['history'] = [True, int(last_received_time), int(first_received_time)]
             self.sending_status['real-time'] = True
