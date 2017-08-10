@@ -110,11 +110,11 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             pass
 
         if re.match('start', command) is not None:
-            if last_received_time is not None:
+            if last_received_time is not 0:
                 global testlasttime
                 testlasttime = sqlite3.time()
                 self.selectlasttime()
-                global first_received_time 
+                global first_received_time
                 first_received_time = lastresults
                 self.sending_status['history'] = [True, int(last_received_time), int(first_received_time)]
             self.sending_status['real-time'] = True
