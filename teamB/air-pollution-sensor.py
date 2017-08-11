@@ -112,7 +112,7 @@ if __name__ == '__main__':
                     print "INFO: Sending results (0/0)...\r",
                     for row in results:
                         i += 1
-                        h_msg = "{},{},{},{},{},{},{},{}".format(('4e:71:9e:8c:88:fd',round(row[0],1), round(row[1],1), round(row[2],1), round(row[3],1), round(row[4],1), round(row[5],1), round(row[6]),1))
+                        h_msg = "{},{},{},{},{},{},{},{}".format('4e:71:9e:8c:88:fd',round(row[0],1), round(row[1],1), round(row[2],1), round(row[3],1), round(row[4],1), round(row[5],1), round(row[6],1))
                         client_handler.send('h' + h_msg + '\n')
 
                         print "INFO: Sending results ({}/{})...\r".format(i, n),
