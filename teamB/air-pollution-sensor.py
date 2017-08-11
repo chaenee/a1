@@ -112,14 +112,14 @@ if __name__ == '__main__':
                     print "INFO: Sending results (0/0)...\r",
                     for row in results:
                         i += 1
-                        
-                        row[0]=sensor_output.get('temp', -1)
-                        row[1] = sensor_output.get('CO', -1)
-                        row[2] = sensor_output.get('NO2', -1)
-                        row[3] = sensor_output.get('SO2', -1)
-                        row[4] = sensor_output.get('CO3', -1)
-                        row[5] = sensor_output.get('O3', -1)
-                        row[6] = sensor_output.get('PM25', -1)
+
+                        row[0]=sensor_output.get('temp')
+                        row[1] = sensor_output.get('CO')
+                        row[2] = sensor_output.get('NO2')
+                        row[3] = sensor_output.get('SO2')
+                        row[4] = sensor_output.get('CO3')
+                        row[5] = sensor_output.get('O3')
+                        row[6] = sensor_output.get('PM25')
 
                         h_msg = "{},{},{},{},{},{},{},{}".format('4e:71:9e:8c:88:fd',round(row[0],1), round(row[1],1), round(row[2],1), round(row[3],1), round(row[4],1), round(row[5],1), round(row[6],1))
                         client_handler.send('h' + h_msg + '\n')
