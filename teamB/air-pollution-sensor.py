@@ -125,7 +125,7 @@ if __name__ == '__main__':
 
                     # Send end-of-message indicator
                     print "\nINFO: Done"
-                    client_handler.send("h\n")
+                    client_handler.send("hend")
 
                 # Reset history status
                 client_handler.sending_status['history'] = [False, -1, -1]
