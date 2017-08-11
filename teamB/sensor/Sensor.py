@@ -146,7 +146,7 @@ class SensorServer(Thread):
             #  n. set MUX to sensor n - 1, read sensor n - 1.
             logger.info("Reading {} sensor...".format(self.sensor_names[0]))
             # Temperature constant
-            t0 = 650
+            t0 = 600
             c0, c1 = self.read_sensor(0)
             temp = c0 - t0
 
