@@ -1,7 +1,6 @@
 import asyncore
 import logging
 import re
-import sqlite3
 from bterror import BTError
 from time import time, strftime, gmtime
 
@@ -62,7 +61,6 @@ class BTClientHandler(asyncore.dispatcher_with_send):
             global last_received_times
             last_received_times = int(time())
             self.sending_status['real-time'] = False
-
             pass
 
         if re.match('start', command) is not None:
