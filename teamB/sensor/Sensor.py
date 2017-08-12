@@ -29,7 +29,7 @@ class SensorServer(Thread):
         self.adc_raw = "/sys/bus/iio/devices/iio:device0/in_voltage0_raw"
         self.adc_scale = "/sys/bus/iio/devices/iio:device0/in_voltage_scale"
 
-        self.sensor_names = ['temp', 'CO', 'NO2', 'SO2', 'O3', 'PM25']
+        self.sensor_names = ['temp', 'NO2', 'O3', 'CO', 'SO2', 'PM25']
 
         # Use a dict to store sensor output, the format is:
         # { "time": [time stamp],
@@ -184,7 +184,7 @@ class SensorServer(Thread):
             c8, c9 = self.read_sensor(4)
             sn4 =  ((c6 - 333) - (0.16 * c7 - (c7 - 274))) * 3.47222222
 
-         
+
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[4], sn4))
             # Save output to the dict
             self.sensor_output[self.sensor_names[4]] = sn4
