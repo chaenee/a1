@@ -150,7 +150,7 @@ class SensorServer(Thread):
 
             c0, c1 = self.read_sensor(0)
             temp = c0 - t0
-
+            temp = temp if (temp >= 0) else -temp
             # Channel 1 is not connected so we don't care about its output
             logger.info("{} sensor outputs {} degree".format(self.sensor_names[0], temp))
             # Save output to the dict
