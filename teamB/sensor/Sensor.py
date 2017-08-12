@@ -146,7 +146,7 @@ class SensorServer(Thread):
             #  n. set MUX to sensor n - 1, read sensor n - 1.
             logger.info("Reading {} sensor...".format(self.sensor_names[0]))
             # Temperature constant
-            t0 = 330
+            t0 = 370
 
             c0, c1 = self.read_sensor(0)
             temp = c0 - t0
@@ -159,7 +159,7 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[1]))
             c2, c3 = self.read_sensor(1)
             sn1 = ((c2 - 287) - (1.18 * (c3 - 292))) * 3.87596899
-
+            sn1 = sn1 if (sn1 >= 0) else -sn1
 
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[1], sn1))
             # Save output to the dict
@@ -175,7 +175,7 @@ class SensorServer(Thread):
 
             logger.info("Reading {} sensor...".format(self.sensor_names[3]))
             c6, c7 = self.read_sensor(3)
-            sn3 = ((c6 - 345) - ((-0.001) * (c7 - 314))) * 3.42465753 * 0.001
+            sn3 = ((c6 - 345) - ((-0.05) * (c7 - 314))) * 3.42465753 * 0.001
 
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[3], sn3))
             # Save output to the dict
@@ -193,7 +193,7 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[5]))
             c10, c11 = self.read_sensor(5)
             pm25 = (0.518 + 0.00274 * (240.0 * (1000 * c10) ** 6 - 2491.3 * (1000 * c10) ** 5 + 9448.7 * (1000 * c10) ** 4 - 14840.0 * (
-                1000 * c10) ** 3 + 10684.0 * (1000 * c10) ** 2 + 2211.8 * (1000 * c10) + 7.9623)) * 10 ** -32
+                1000 * c10) ** 3 + 10684.0 * (1000 * c10) ** 2 + 2211.8 * (1000 * c10) + 7.9623)) *0.25* 10 ** -32
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[5], pm25))
             # Save output to the dict
             self.sensor_output[self.sensor_names[5]] = pm25
