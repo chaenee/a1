@@ -147,7 +147,6 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[0]))
             # Temperature constant
             t0 = 370
-
             c0, c1 = self.read_sensor(0)
             temp = c0 - t0
             temp = temp if (temp >= 0) else -temp
@@ -160,7 +159,6 @@ class SensorServer(Thread):
             c2, c3 = self.read_sensor(1)
             sn1 = ((c2 - 287) - (1.18 * (c3 - 292))) * 3.87596899
             sn1 = sn1 if (sn1 >= 0) else -sn1
-
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[1], sn1))
             # Save output to the dict
             self.sensor_output[self.sensor_names[1]] = sn1
@@ -168,7 +166,7 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[2]))
             c4, c5 = self.read_sensor(2)
             sn2 = ((c4 - 418) - (0.19 * (c5 - 404))) * 2.54452926
-
+            sn2 = sn2 if (sn2 >= 0) else -sn2
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[2], sn2))
             # Save output to the dict
             self.sensor_output[self.sensor_names[2]] = sn2
@@ -176,7 +174,7 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[3]))
             c6, c7 = self.read_sensor(3)
             sn3 = ((c6 - 345) - ((0.25) * (c7 - 314))) * 3.42465753 * 0.001
-
+            sn3 = sn3 if (sn3 >= 0) else -sn3
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[3], sn3))
             # Save output to the dict
             self.sensor_output[self.sensor_names[3]] = sn3
@@ -184,8 +182,7 @@ class SensorServer(Thread):
             logger.info("Reading {} sensor...".format(self.sensor_names[4]))
             c8, c9 = self.read_sensor(4)
             sn4 =  ((c8 - 333) - (0.53 * (c9 - 274))) * 3.47222222
-
-
+            sn4 = sn4 if (sn4 >= 0) else -sn4
             logger.info("{} sensor outputs {} ppb".format(self.sensor_names[4], sn4))
             # Save output to the dict
             self.sensor_output[self.sensor_names[4]] = sn4
